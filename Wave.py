@@ -2,28 +2,36 @@ import pygame
 import random
 pygame.init()
 
-cd = 10
-WH = WW = cd*50
+DIM = 500
+WH = WW = DIM/4
 
-cords = [[x,y] for y in range(0,WW,50) for x in range(0,WH,50)]
+UP = 0
+DOWN = 1
+LEFT = 2
+RIGHT = 3
 
 tiles = {
-    'blank' : pygame.image.load('./Tiles/blank.png'),
-    'up' : pygame.image.load('./Tiles/up.png'),
-    'down' : pygame.image.load('./Tiles/down.png'),
-    'left' : pygame.image.load('./Tiles/left.png'),
-    'right' : pygame.image.load('./Tiles/right.png')
+    'blank' : pygame.transform.scale(pygame.image.load('./Tiles/blank.png'), (WH, WW)),
+    'up' : pygame.transform.scale(pygame.image.load('./Tiles/up.png'), (WH, WW)),
+    'down' : pygame.transform.scale(pygame.image.load('./Tiles/down.png'), (WH, WW)),
+    'left' : pygame.transform.scale(pygame.image.load('./Tiles/left.png'), (WH, WW)),
+    'right' : pygame.transform.scale(pygame.image.load('./Tiles/right.png'), (WH, WW))
 }
 
-accupide = {str(cord) : 'None' for cord in cords}
-print(accupide)
+rules = {
+    'blank' : [['blank', 'up'], ['blank', 'down'], ['blank', 'left'], ['blank', 'right']],
+    'up' : [['down', 'left', 'right'], ['blank', 'down'], ['up', 'down', 'right'], ['up', 'down', 'left']],
+    'down' : [['blank', 'up'], ['up', 'left', 'right'], ['up', 'down', 'right'], ['up', 'down', 'left']],
+    'left' : [['down', 'left', 'right'], ['up', 'left', 'right'], ['up', 'down', 'right'], ['blank', 'right']],
+    'right' : [['down', 'left', 'right'], ['up', 'left', 'right'], ['blank', 'left'], ['up', 'down', 'left']]
+}
 
-screen = pygame.display.set_mode((WH,WW))
+screen = pygame.display.set_mode((DIM,DIM))
 
 
 
 
-
+screen.blit(tiles[random.choice(list(tiles.keys()))], (random.randrange(0, DIM, WW), random.randrange(0, DIM, WH)))
 
 running = True
 
@@ -31,11 +39,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    while x := True:
-        screen.blit(tiles[insta_tile := random.choice(list(tiles))], insta_cord := random.choice(cords))
-        accupide[str(insta_cord)] = insta_tile
-        cords.remove(insta_cord)
-        pygame.display.flip()
-        pygame.time.wait(100)
-        x = False
-print(accupide)
+    
+
+    
+
+
+    pygame.display.flip()
+    
+    
