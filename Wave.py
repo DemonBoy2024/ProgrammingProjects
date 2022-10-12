@@ -4,6 +4,7 @@ import sys
 pygame.init()
 
 
+#Checks for any cells with 0 possible tiles
 def no_empty_tile(board):
   for i in board:
     if len(board) == 0:
@@ -16,6 +17,9 @@ def coord_index(row, col):
   return [row*tile_height, col*tile_width]
 
 
+
+
+
 window_width = window_height = 400
 tile_width = tile_height = window_width/4
 cells_in_row = int(window_width/tile_width)
@@ -26,6 +30,8 @@ DOWN = 1
 LEFT = 2
 RIGHT = 3
 
+
+#Stores tile images
 tiles = {
   'blank' : pygame.transform.scale(pygame.image.load('./Tiles/blank.png'), (tile_width, tile_height)),
   'up' : pygame.transform.scale(pygame.image.load('./Tiles/up.png'), (tile_width, tile_height)),
@@ -34,6 +40,7 @@ tiles = {
   'right' : pygame.transform.scale(pygame.image.load('./Tiles/right.png'), (tile_width, tile_height))
 }
 
+#Sets rules for each tile
 rules = {
     'blank' : [['blank', 'up'], ['blank', 'down'], ['blank', 'left'], ['blank', 'right']],
     'up' : [['down', 'left', 'right'], ['blank', 'down'], ['up', 'down', 'right'], ['up', 'down', 'left']],
@@ -42,19 +49,19 @@ rules = {
     'right' : [['down', 'left', 'right'], ['up', 'left', 'right'], ['blank', 'left'], ['up', 'down', 'left']]
 }
 
+#Creates board with superposition of all possible cells
 board = [[['blank', 'up', 'down', 'left', 'right'] for x in range(0, cells_in_row)] for i in range(0, number_of_rows)]
-print(board)
 
 
+#Draws screen with black background
 screen = pygame.display.set_mode((window_height, window_width))
 screen.fill((255,255,255))
 
-screen.blit(tiles[(rand_tile := random.choice(list(tiles.keys())))], coord_index((col := random.randint(0, cells_in_row-1)), row := random.randint(0, number_of_rows-1)))
-print(row, col)
-board[row][col] = [rand_tile]
-print(board)
 
-running = True
+#Places random tile at random cell and collapses that cell to that tile in the board list
+screen.blit(tiles[(rand_tile := random.choice(list(tiles.keys())))], coord_index((col := random.randint(0, cells_in_row-1)), row := random.randint(0, number_of_rows-1)))
+board[row][col] = [rand_tile]
+
 
 while (no_empty_tile):
     for event in pygame.event.get():
