@@ -1,14 +1,15 @@
 import pygame
 import random
+import sys
 pygame.init()
 
-'''
+
 def no_empty_tile(board):
   for i in board:
     if len(board) == 0:
       return False
   return True
-'''
+
 
 #Takes in the index of the cell in the list board and outputs the coordinate it holds on the canvas
 def coord_index(row, col):
@@ -43,10 +44,8 @@ rules = {
 
 board = [[['blank', 'up', 'down', 'left', 'right'] for x in range(0, cells_in_row)] for i in range(0, number_of_rows)]
 print(board)
-'''
-while (no_empty_tile):
-  pass
-'''
+
+
 screen = pygame.display.set_mode((window_height, window_width))
 screen.fill((255,255,255))
 
@@ -55,13 +54,12 @@ print(row, col)
 board[row][col] = [rand_tile]
 print(board)
 
-
 running = True
 
-while running:
+while (no_empty_tile):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+             sys.exit()
     
 
     
