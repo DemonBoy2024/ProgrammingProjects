@@ -16,7 +16,10 @@ def no_empty_tile(board):
 def coord_index(row, col):
   return [row*tile_height, col*tile_width]
 
-
+def possibility_collapse(current_cell_index):
+  return 0
+  
+  
 
 
 
@@ -51,6 +54,7 @@ rules = {
 
 #Creates board with superposition of all possible cells
 board = [[['blank', 'up', 'down', 'left', 'right'] for x in range(0, cells_in_row)] for i in range(0, number_of_rows)]
+collapsed_cell = [[False for x in range(0, cells_in_row)] for i in range(0, number_of_rows)]
 
 
 #Draws screen with black background
@@ -59,19 +63,15 @@ screen.fill((255,255,255))
 
 
 #Places random tile at random cell and collapses that cell to that tile in the board list
-screen.blit(tiles[(rand_tile := random.choice(list(tiles.keys())))], coord_index((col := random.randint(0, cells_in_row-1)), row := random.randint(0, number_of_rows-1)))
+rand_tile = random.choice(list(tiles.keys()))
+col, row = random.randint(0, cells_in_row - 1), random.randint(0, number_of_rows - 1)
+screen.blit(tiles[rand_tile], coord_index(col, row))
 board[row][col] = [rand_tile]
+collapsed_cell[row][col]
 
 
-while (no_empty_tile):
+while (True):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
              sys.exit()
-    
-
-    
-
-
     pygame.display.flip()
-    
-    
